@@ -5,124 +5,221 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SILab2Test {
+
     @Test
-    public void test1()
-    {
+    void test1() {
+        User user = new User("user", "Pass1234", "user@email.com");
+        List<User> allUsers = Arrays.asList(
+                new User("user1", "Pass5678", "user1@email.com"),
+                new User("user2", "Pass9012", "user2@email.com")
+        );
+
+        boolean result = SILab2.function(user, allUsers);
+
+        assertEquals(false ,result);
+    }
+
+    @Test
+    void test2() {
         User user = null;
         List<User> allUsers = Arrays.asList(
-                new User("user2", "pass123", "user2@example.com"),
-                new User("user3", "test123", "user3@example.com")
+                new User("user1", "Pass5678", "user1@email.com"),
+                new User("user2", "Pass9012", "user2@email.com")
+        );
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> SILab2.function(user, allUsers));
+        assertEquals("Mandatory information missing!", exception.getMessage());
+    }
+
+    @Test
+    void test3() {
+        User user = new User("user", null, "user@email.com");
+        List<User> allUsers = Arrays.asList(
+                new User("user1", "Pass5678", "user1@email.com"),
+                new User("user2", "Pass9012", "user2@email.com")
+        );
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> SILab2.function(user, allUsers));
+        assertEquals("Mandatory information missing!", exception.getMessage());
+    }
+
+    @Test
+    void test4() {
+        User user = new User("user", "Pass1234", null);
+        List<User> allUsers = Arrays.asList(
+                new User("user1", "Pass5678", "user1@email.com"),
+                new User("user2", "Pass9012", "user2@email.com")
+        );
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> SILab2.function(user, allUsers));
+        assertEquals("Mandatory information missing!", exception.getMessage());
+    }
+
+    @Test
+    void test5() {
+        User user = new User(null, "Pass1234", "user@email.com");
+        List<User> allUsers = Arrays.asList(
+                new User("user1", "Pass5678", "user1@email.com"),
+                new User("user2", "Pass9012", "user2@email.com")
         );
 
         boolean result = SILab2.function(user, allUsers);
 
-        assertEquals("Mandatory information missing!", result);
+        assertEquals(false,result);
     }
+
     @Test
-    public void test2()
-    {
-        User user = new User(null, "password123", "user@example.com");
+    void test6() {
+        User user = new User("user", "Pass1234", "user1@email.com");
+        List<User> allUsers = Arrays.asList(
+                new User("user1", "Pass5678", "user1@email.com"),
+                new User("user2", "Pass9012", "user2@email.com")
+        );
+
+        boolean result = SILab2.function(user, allUsers);
+
+        assertEquals(false,result);
+    }
+
+    @Test
+    void test7() {
+        User user = new User("user1", "Pass1234", "user@email.com");
+        List<User> allUsers = Arrays.asList(
+                new User("user1", "Pass5678", "user1@email.com"),
+                new User("user2", "Pass9012", "user2@email.com")
+        );
+
+        boolean result = SILab2.function(user, allUsers);
+
+        assertEquals(false,result);
+    }
+
+    @Test
+    void test8() {
+        User user = new User("user", "user1234", "user@email.com");
+        List<User> allUsers = Arrays.asList(
+                new User("user1", "Pass5678", "user1@email.com"),
+                new User("user2", "Pass9012", "user2@email.com")
+        );
+
+        boolean result = SILab2.function(user, allUsers);
+
+        assertEquals(false,result);
+    }
+
+    @Test
+    void test9() {
+        User user = new User("user", "Pass1", "user@email.com");
+        List<User> allUsers = Arrays.asList(
+                new User("user1", "Pass5678", "user1@email.com"),
+                new User("user2", "Pass9012", "user2@email.com")
+        );
+
+        boolean result = SILab2.function(user, allUsers);
+
+        assertEquals(false,result);
+    }
+
+    @Test
+    void test10() {
+        User user = new User("user", "Pass 1234", "user@email.com");
+        List<User> allUsers = Arrays.asList(
+                new User("user1", "Pass5678", "user1@email.com"),
+                new User("user2", "Pass9012", "user2@email.com")
+        );
+
+        boolean result = SILab2.function(user, allUsers);
+
+        assertEquals(false,result);
+    }
+
+    void test11() {
+        User user = new User("user", "Pass1234", "user@email.com");
         List<User> allUsers = new ArrayList<>();
 
-        SILab2.function(user, allUsers);
+        boolean result = SILab2.function(user, allUsers);
 
-        assertEquals("user@example.com", user.getUsername());
+        assertEquals(true,result);
     }
+
     @Test
-    public void test3()
-    {
-        User user = new User("username1", "password123", "user@example.com");
+    void test12() {
+        User user = new User("user", "Pass1234", "user@email.com");
         List<User> allUsers = Arrays.asList(
-                new User("username2", "password456", "user2@example.com"),
-                new User("username3", "password789", "user@example.com")
+                new User("user", "Pass5678", "user1@email.com"),
+                new User("user2", "Pass9012", "user2@email.com")
         );
 
         boolean result = SILab2.function(user, allUsers);
 
-        assertEquals(false, result);
+        assertEquals(false,result);
     }
+
     @Test
-    public void test4()
-    {
-        User user = new User("username1", "password123", "user@example.com");
+    void test13() {
+        User user = new User("user", "Pass1234", "user@email");
         List<User> allUsers = Arrays.asList(
-                new User("username1", "password123", "user1@example.com"),
-                new User("user2", "password123", "user2@example.com")
+                new User("user1", "Pass5678", "user1@email.com"),
+                new User("user2", "Pass9012", "user2@email.com")
         );
 
         boolean result = SILab2.function(user, allUsers);
 
-        assertEquals(false, result);
+        assertEquals(false,result);
     }
+
     @Test
-    public void test5()
-    {
-        User user = new User("username1", "password123", "user@example.com");
+    void test14() {
+        User user = new User("user", "Pass1234", "user1@email.com");
         List<User> allUsers = Arrays.asList(
-                new User("user1", "password123", "user1@example.com"),
-                new User("user2", "password123", "user2@example.com")
+                new User("user1", "Pass5678", "user1@email.com"),
+                new User("user2", "Pass9012", "user2@email.com")
         );
 
         boolean result = SILab2.function(user, allUsers);
 
-        assertEquals(false , result);
+        assertEquals(false,result);
     }
+
     @Test
-    public void test6()
-    {
-        User user = new User("username1", "password123", "user@example.com");
-        List<User> allUsers = new ArrayList<>();
-
-        boolean result = SILab2.function(user, allUsers);
-
-        assertEquals(false ,result);
-    }
-    @Test
-    public void test7()
-    {
-        User user = new User("username1", "pass123", "user@example.com");
-        List<User> allUsers = new ArrayList<>();
-
-        boolean result = SILab2.function(user, allUsers);
-
-        assertEquals(false ,result);
-    }
-    @Test
-    public void test8()
-    {
-        User user = new User("username1", "password 123", "user@example.com");
-        List<User> allUsers = new ArrayList<>();
-
-        boolean result = SILab2.function(user, allUsers);
-
-        assertEquals(false ,result);
-    }
-    @Test
-    public void test9()
-    {
-        User user = new User("username1", "p@ssw0rd123", "user@example.com");
+    void test15() {
+        User user = new User("user", "Pass1234", "user@email.com");
         List<User> allUsers = Arrays.asList(
-                new User("user1", "password1", "user1@example.com"),
-                new User("user2", "password2", "user2@example.com")
+                new User("user1", "Pass5678", "user1@email.com"),
+                new User("user2", "Pass9012", "user2@email.com")
         );
 
         boolean result = SILab2.function(user, allUsers);
 
-        assertEquals(true ,result);
+        assertEquals(false,result);
     }
+
     @Test
-    public void test10()
-    {
-        User user = new User("username1", "p@ssw0rd123", "user@example.com");
+    void test16() {
+        User user = new User("user", "user1234!", "user@email.com");
         List<User> allUsers = Arrays.asList(
-                new User("user1", "password1", "user1@example.com"),
-                new User("user2", "password2", "user@example.com")
+                new User("user1", "Pass5678", "user1@email.com"),
+                new User("user2", "Pass9012", "user2@email.com")
         );
 
         boolean result = SILab2.function(user, allUsers);
 
-        assertEquals(false ,result);
+        assertEquals(false,result);
+    }
+
+    @Test
+    void test17() {
+        User user = new User("user", "Pa1!", "user@email.com");
+        List<User> allUsers = Arrays.asList(
+                new User("user1", "Pass5678", "user1@email.com"),
+                new User("user2", "Pass9012", "user2@email.com")
+        );
+
+        boolean result = SILab2.function(user, allUsers);
+
+        assertEquals(false,result);
     }
 }
